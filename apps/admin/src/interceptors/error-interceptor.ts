@@ -1,13 +1,17 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { catchError, of } from 'rxjs';
 import { inject } from '@angular/core';
+import { catchError, of } from 'rxjs';
 import { ErrorService } from '../services/error';
+import { SKIP_ERROR_HANDLER } from '../app/app.config';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const error = inject(ErrorService);
+  if(req.context.get(SKIP_ERROR_HANDLER)){
+    return next(req);
+  }
 
+  const error = inject(ErrorService);
   return next(req).pipe(
-    catchError((err: HttpErrorResponse) => {
+    catchError((err:HttpErrorResponse) => {
       error.handle(err);
       return of();
     })

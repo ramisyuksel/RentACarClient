@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpContextToken, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpInterceptor } from '../interceptors/http-interceptor';
 import { errorInterceptor } from '../interceptors/error-interceptor';
 import { authInterceptor } from '../interceptors/auth-interceptor';
@@ -15,6 +15,11 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(appRoutes),
-    provideHttpClient(withInterceptors([httpInterceptor, authInterceptor]))
+    provideHttpClient(withInterceptors([
+      httpInterceptor,
+      authInterceptor,
+      errorInterceptor]))
   ],
 };
+
+export const SKIP_ERROR_HANDLER = new HttpContextToken<boolean>(() => false);

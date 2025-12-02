@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, resource, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbService } from '../../services/breadcrumb';
 import Blank from '../../components/blank/blank';
-import { HttpService } from '../../services/http';
-import { lastValueFrom } from 'rxjs';
+import { httpResource } from '@angular/common/http';
 
 @Component({
   imports: [Blank],
@@ -12,17 +11,8 @@ import { lastValueFrom } from 'rxjs';
 })
 export default class Dashboard implements OnInit {
   readonly #breadcrumb = inject(BreadcrumbService);
+  readonly result = httpResource(() => "/rent/");
 
-
-  readonly result = resource({
-    loader: async() => {
-      const res = await lastValueFrom(this.#http.getResource("/rent/"));
-      console.log(res);
-      return res;
-    }
-  });
-
-  readonly #http = inject(HttpService);
   ngOnInit(): void {
     this.#breadcrumb.setDashboard();
   }

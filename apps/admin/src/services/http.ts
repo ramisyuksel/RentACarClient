@@ -1,32 +1,32 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './error';
 import { Result } from '../models/result.model';
-import { catchError, of } from 'rxjs';
+import { SKIP_ERROR_HANDLER } from '../app/app.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-
   readonly #http = inject(HttpClient);
-  readonly #error = inject(ErrorService)
+  readonly #error = inject(ErrorService);
 
   getResource<T>(
     endpoint: string){
-    return this.#http.get<Result<T>>(endpoint).pipe(
-      catchError((err: HttpErrorResponse) => {
-        this.#error.handle(err);
-        return of();
-      })
-    );
+    return this.#http.get<Result<T>>(endpoint, {
+      context: new HttpContext()
+        .set(SKIP_ERROR_HANDLER, false)
+    })
   }
 
   get<T>(
     endpoint: string,
     callBack: (res:T) => void,
     errorCallBack?: (err: HttpErrorResponse) => void){
-    this.#http.delete<Result<T>>(endpoint).subscribe({
+    this.#http.delete<Result<T>>(endpoint, {
+      context: new HttpContext()
+        .set(SKIP_ERROR_HANDLER, true)
+    }).subscribe({
       next: (res) => {
         callBack(res.data!)
       },
@@ -44,7 +44,10 @@ export class HttpService {
     body:any,
     callBack: (res:T) => void,
     errorCallBack?: (err: HttpErrorResponse) => void){
-    this.#http.post<Result<T>>(endpoint, body).subscribe({
+    this.#http.post<Result<T>>(endpoint, body, {
+      context: new HttpContext()
+        .set(SKIP_ERROR_HANDLER, true)
+    }).subscribe({
       next: (res) => {
         callBack(res.data!)
       },
@@ -62,7 +65,10 @@ export class HttpService {
     body:any,
     callBack: (res:T) => void,
     errorCallBack?: (err: HttpErrorResponse) => void){
-    this.#http.put<Result<T>>(endpoint, body).subscribe({
+    this.#http.put<Result<T>>(endpoint, body, {
+      context: new HttpContext()
+        .set(SKIP_ERROR_HANDLER, true)
+    }).subscribe({
       next: (res) => {
         callBack(res.data!)
       },
@@ -79,7 +85,10 @@ export class HttpService {
     endpoint: string,
     callBack: (res:T) => void,
     errorCallBack?: (err: HttpErrorResponse) => void){
-    this.#http.delete<Result<T>>(endpoint).subscribe({
+    this.#http.delete<Result<T>>(endpoint, {
+      context: new HttpContext()
+        .set(SKIP_ERROR_HANDLER, true)
+    }).subscribe({
       next: (res) => {
         callBack(res.data!)
       },
