@@ -21,8 +21,12 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'branches',
-        loadChildren: () => import('../pages/branches/route')
-      }
+        loadChildren: () => import('../pages/branches/route'),
+      },
+      {
+        path: 'roles',
+        loadChildren: () => import('../pages/roles/route'),
+      },
     ],
   },
 ];

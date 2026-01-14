@@ -18,15 +18,10 @@ import { BranchModel, initialBranch } from '../../../models/branch.model';
 import { HttpService } from '../../../services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { NgxMaskDirective } from 'ngx-mask';
+import { initialRole, RoleModel } from '../../../models/role.model';
 
 @Component({
-  imports: [
-    Blank,
-    FormsModule,
-    FormValidateDirective,
-    NgClass,
-    NgxMaskDirective,
-  ],
+  imports: [Blank, FormsModule, FormValidateDirective, NgClass],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,13 +30,13 @@ export default class Create {
   readonly id = signal<string | undefined>(undefined);
   readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Şubeler',
-      icon: 'bi-buildings',
-      url: '/branches',
+      title: 'Roller',
+      icon: 'bi-clipboard2-check',
+      url: '/roles',
     },
   ]);
   readonly pageTitle = computed(() =>
-    this.id() ? 'Şube Güncelle' : 'Şube Ekle'
+    this.id() ? 'Rol Güncelle' : 'Rol Ekle'
   );
   readonly pageIcon = computed(() => (this.id() ? 'bi-pen' : 'bi-plus'));
   readonly btnName = computed(() => (this.id() ? 'Güncelle' : 'Kaydet'));
@@ -49,7 +44,7 @@ export default class Create {
     params: () => this.id(),
     loader: async () => {
       const res = await lastValueFrom(
-        this.#http.getResource<BranchModel>(`/rent/branches/${this.id()}`)
+        this.#http.getResource<RoleModel>(`/rent/roles/${this.id()}`)
       );
 
       this.bredcrumbs.update((prev) => [
@@ -57,7 +52,7 @@ export default class Create {
         {
           title: res.data!.name,
           icon: 'bi-pen',
-          url: `/branches/edit/${this.id()}`,
+          url: `/roles/edit/${this.id()}`,
           isActive: true,
         },
       ]);
@@ -65,7 +60,7 @@ export default class Create {
       return res.data;
     },
   });
-  readonly data = linkedSignal(() => this.result.value() ?? { ...initialBranch });
+  readonly data = linkedSignal(() => this.result.value() ?? { ...initialRole });
   readonly loading = linkedSignal(() => this.result.isLoading());
 
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -84,7 +79,7 @@ export default class Create {
           {
             title: 'Ekle',
             icon: 'bi-plus',
-            url: '/branches/add',
+            url: '/roles/add',
             isActive: true,
           },
         ]);
@@ -99,11 +94,11 @@ export default class Create {
     if (!this.id()) {
       this.loading.set(true);
       this.#http.post<string>(
-        '/rent/branches',
+        '/rent/roles',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'success');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
           this.loading.set(false);
         },
         () => this.loading.set(false)
@@ -111,11 +106,11 @@ export default class Create {
     } else {
       this.loading.set(true);
       this.#http.put<string>(
-        '/rent/branches',
+        '/rent/roles',
         this.data(),
         (res) => {
           this.#toast.showToast('Başarılı', res, 'info');
-          this.#router.navigateByUrl('/branches');
+          this.#router.navigateByUrl('/roles');
           this.loading.set(false);
         },
         () => this.loading.set(false)
