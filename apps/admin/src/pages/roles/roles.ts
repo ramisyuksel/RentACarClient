@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, signal, ViewEncapsulation } from '@
 import { FlexiGridModule } from 'flexi-grid';
 import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-roles',
-  imports: [Grid, FlexiGridModule],
+  imports: [Grid, FlexiGridModule, RouterLink],
   templateUrl: './roles.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,8 +17,7 @@ export default class Roles {
       title: 'Roller',
       icon: 'bi-clipboard2-check',
       url: '/roles',
-      isActive: true
-    }
-]);
-
+      isActive: true,
+    },
+  ]);
 }
