@@ -1,7 +1,13 @@
 import { Route } from '@angular/router';
 import { authGuard } from '../guards/auth-guard';
+import { Common } from '../services/common';
+import { inject } from '@angular/core';
 
 export const appRoutes: Route[] = [
+  {
+    path: 'unauthorize',
+    loadComponent: () => import('../pages/unauthorize/unauthorize'),
+  },
   {
     path: 'login',
     loadComponent: () => import('../pages/auth/login/login'),
@@ -18,6 +24,9 @@ export const appRoutes: Route[] = [
       {
         path: '',
         loadComponent: () => import('../pages/dashboard/dashboard'),
+        canActivate: [
+          () => inject(Common).checkPermissionForRoute('dashboard:view'),
+        ],
       },
       {
         path: 'branches',
