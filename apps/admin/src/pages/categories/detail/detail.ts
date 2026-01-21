@@ -1,14 +1,24 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
-import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
-import { httpResource } from '@angular/common/http';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Result } from '../../../models/result.model';
-import { BranchModel, initialBranch } from '../../../models/branch.model';
-import { ActivatedRoute } from '@angular/router';
 import Blank from '../../../components/blank/blank';
-import { NgxMaskPipe } from 'ngx-mask';
+import {
+  BreadcrumbModel,
+  BreadcrumbService,
+} from '../../../services/breadcrumb';
+import { httpResource } from '@angular/common/http';
+import { CategoryModel, initialCategory } from '../../../models/category.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  imports: [Blank, NgxMaskPipe],
+  imports: [Blank],
   templateUrl: './detail.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,12 +26,14 @@ import { NgxMaskPipe } from 'ngx-mask';
 export default class Detail {
   readonly id = signal<string>('');
   readonly breadcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<BranchModel>>(
-    () => `/rent/branches/${this.id()}`
+  readonly result = httpResource<Result<CategoryModel>>(
+    () => `/rent/categories/${this.id()}`
   );
-  readonly data = computed(() => this.result.value()?.data ?? initialBranch);
+  readonly data = computed(
+    () => this.result.value()?.data ?? initialCategory
+  );
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>('Şube Detay');
+  readonly pageTitle = signal<string>('Kategori Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -34,9 +46,9 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Şubeler',
-          icon: 'bi-buildings',
-          url: '/branches',
+          title: 'Kategoriler',
+          icon: 'bi-tags',
+          url: '/categories',
         },
       ];
 
@@ -47,7 +59,7 @@ export default class Detail {
           {
             title: this.data().name,
             icon: 'bi-zoom-in',
-            url: `/branches/detail/${this.id()}`,
+            url: `/categories/detail/${this.id()}`,
             isActive: true,
           },
         ]);

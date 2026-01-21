@@ -66,9 +66,12 @@ export default class Grid implements AfterViewInit {
     const part = this.#grid.getODataEndpoint(this.state());
     enpoint += `&${part}`;
 
+    console.log('endpoint ', enpoint);
     return enpoint;
   });
-  readonly data = computed(() => this.result.value()?.value ?? []);
+  readonly data = computed(() => {
+    console.log('value', this.result.value());
+    return this.result.value()?.value ?? []});
   readonly total = computed(() => this.result.value()?.['@odata.count'] ?? 0);
   readonly loading = computed(() => this.result.isLoading());
 

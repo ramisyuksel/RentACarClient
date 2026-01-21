@@ -1,14 +1,25 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
-import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
+import Blank from '../../../components/blank/blank';
+import {
+  BreadcrumbModel,
+  BreadcrumbService,
+} from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
 import { Result } from '../../../models/result.model';
-import { BranchModel, initialBranch } from '../../../models/branch.model';
+import { initialRole, RoleModel } from '../../../models/role.model';
 import { ActivatedRoute } from '@angular/router';
-import Blank from '../../../components/blank/blank';
-import { NgxMaskPipe } from 'ngx-mask';
+import { initialUser, UserModel } from '../../../models/user.model';
 
 @Component({
-  imports: [Blank, NgxMaskPipe],
+  imports: [Blank],
   templateUrl: './detail.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,12 +27,12 @@ import { NgxMaskPipe } from 'ngx-mask';
 export default class Detail {
   readonly id = signal<string>('');
   readonly breadcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<BranchModel>>(
-    () => `/rent/branches/${this.id()}`
+  readonly result = httpResource<Result<UserModel>>(
+    () => `/rent/users/${this.id()}`
   );
-  readonly data = computed(() => this.result.value()?.data ?? initialBranch);
+  readonly data = computed(() => this.result.value()?.data ?? initialUser);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = signal<string>('Şube Detay');
+  readonly pageTitle = signal<string>('Kullanıcı Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -34,9 +45,9 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Şubeler',
-          icon: 'bi-buildings',
-          url: '/branches',
+          title: 'Kullanıcılar',
+          icon: 'bi-people',
+          url: '/users',
         },
       ];
 
@@ -45,9 +56,9 @@ export default class Detail {
         this.breadcrumbs.update((prev) => [
           ...prev,
           {
-            title: this.data().name,
+            title: this.data().fullName,
             icon: 'bi-zoom-in',
-            url: `/branches/detail/${this.id()}`,
+            url: `/users/detail/${this.id()}`,
             isActive: true,
           },
         ]);

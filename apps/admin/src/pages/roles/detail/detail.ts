@@ -16,16 +16,18 @@ import { initialRole, RoleModel } from '../../../models/role.model';
 export default class Detail {
   readonly id = signal<string>('');
   readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
-  readonly result = httpResource<Result<RoleModel>>(() => `/rent/roles/${this.id()}`);
+  readonly result = httpResource<Result<RoleModel>>(
+    () => `/rent/roles/${this.id()}`
+  );
   readonly data = computed(() => this.result.value()?.data ?? initialRole);
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = signal<string>('Rol Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
 
-  constructor(){
-    this.#activated.params.subscribe(res => {
+  constructor() {
+    this.#activated.params.subscribe((res) => {
       this.id.set(res['id']);
     });
 
@@ -38,16 +40,19 @@ export default class Detail {
         },
       ];
 
-      if(this.data()){
+      if (this.data()) {
         this.bredcrumbs.set(breadCrumbs);
-        this.bredcrumbs.update(prev => [...prev, {
-          title: this.data().name,
-          icon: 'bi-zoom-in',
-          url: `/roles/detail/${this.id()}`,
-          isActive: true
-        }]);
+        this.bredcrumbs.update((prev) => [
+          ...prev,
+          {
+            title: this.data().name,
+            icon: 'bi-zoom-in',
+            url: `/roles/detail/${this.id()}`,
+            isActive: true,
+          },
+        ]);
         this.#breadcrumb.reset(this.bredcrumbs());
       }
-    })
+    });
   }
 }

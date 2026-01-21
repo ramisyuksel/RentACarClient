@@ -26,4 +26,16 @@ export const navigations: NavigationModel[] = [
     icon: 'bi-clipboard2-check',
     permission: 'role:view',
   },
+  {
+    title: 'Kategoriler',
+    url: '/categories',
+    icon: 'bi-tags',
+    permission: 'category:view',
+  },
+  {
+    title: 'Kullanıcılar',
+    url: '/users',
+    icon: 'bi-people',
+    permission: 'user:view',
+  },
 ];
