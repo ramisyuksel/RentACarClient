@@ -15,7 +15,7 @@ import { initialRole, RoleModel } from '../../../models/role.model';
 })
 export default class Detail {
   readonly id = signal<string>('');
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([]);
   readonly result = httpResource<Result<RoleModel>>(
     () => `/rent/roles/${this.id()}`
   );
@@ -41,8 +41,8 @@ export default class Detail {
       ];
 
       if (this.data()) {
-        this.bredcrumbs.set(breadCrumbs);
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.set(breadCrumbs);
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: this.data().name,
@@ -51,7 +51,7 @@ export default class Detail {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
   }

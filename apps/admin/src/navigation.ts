@@ -33,6 +33,12 @@ export const navigations: NavigationModel[] = [
     permission: 'category:view',
   },
   {
+    title: 'Araçlar',
+    url: '/vehicles',
+    icon: 'bi-car-front',
+    permission: 'vehicle:view',
+  },
+  {
     title: 'Koruma Paketleri',
     url: '/protection-packages',
     icon: 'bi-shield-check',

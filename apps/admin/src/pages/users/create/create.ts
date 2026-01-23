@@ -42,7 +42,7 @@ import { Common } from '../../../services/common';
 })
 export default class Create {
   readonly id = signal<string | undefined>(undefined);
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Kullanıcılar',
       icon: 'bi-people',
@@ -61,7 +61,7 @@ export default class Create {
         this.#http.getResource<UserModel>(`/rent/users/${this.id()}`)
       );
 
-      this.bredcrumbs.update((prev) => [
+      this.breadcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.fullName,
@@ -70,7 +70,7 @@ export default class Create {
           isActive: true,
         },
       ]);
-      this.#breadcrumb.reset(this.bredcrumbs());
+      this.#breadcrumb.reset(this.breadcrumbs());
       return res.data;
     },
   });
@@ -99,7 +99,7 @@ export default class Create {
       if (res['id']) {
         this.id.set(res['id']);
       } else {
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: 'Ekle',
@@ -108,7 +108,7 @@ export default class Create {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
   }

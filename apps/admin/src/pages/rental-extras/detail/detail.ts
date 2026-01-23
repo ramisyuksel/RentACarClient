@@ -29,7 +29,7 @@ import { TrCurrencyPipe } from 'tr-currency';
 })
 export default class Detail {
   readonly id = signal<string>('');
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([]);
   readonly result = httpResource<Result<RentalExtraModel>>(
     () => `/rent/rental-extras/${this.id()}`
   );
@@ -57,8 +57,8 @@ export default class Detail {
       ];
 
       if (this.data()) {
-        this.bredcrumbs.set(breadCrumbs);
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.set(breadCrumbs);
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: this.data().name,
@@ -67,7 +67,7 @@ export default class Detail {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
   }

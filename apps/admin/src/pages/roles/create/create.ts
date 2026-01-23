@@ -28,7 +28,7 @@ import { initialRole, RoleModel } from '../../../models/role.model';
 })
 export default class Create {
   readonly id = signal<string | undefined>(undefined);
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Roller',
       icon: 'bi-clipboard2-check',
@@ -47,7 +47,7 @@ export default class Create {
         this.#http.getResource<RoleModel>(`/rent/roles/${this.id()}`)
       );
 
-      this.bredcrumbs.update((prev) => [
+      this.breadcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.name,
@@ -56,7 +56,7 @@ export default class Create {
           isActive: true,
         },
       ]);
-      this.#breadcrumb.reset(this.bredcrumbs());
+      this.#breadcrumb.reset(this.breadcrumbs());
       return res.data;
     },
   });
@@ -74,7 +74,7 @@ export default class Create {
       if (res['id']) {
         this.id.set(res['id']);
       } else {
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: 'Ekle',
@@ -83,7 +83,7 @@ export default class Create {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
   }

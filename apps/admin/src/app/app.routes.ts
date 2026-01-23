@@ -9,6 +9,10 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('../pages/unauthorize/unauthorize'),
   },
   {
+    path: 'unavailable',
+    loadComponent: () => import('../pages/unavailable/unavailable'),
+  },
+  {
     path: 'login',
     loadComponent: () => import('../pages/auth/login/login'),
   },
@@ -42,7 +46,7 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'protection-packages',
-        loadChildren: () => import('../pages/protection-packages/route')
+        loadChildren: () => import('../pages/protection-packages/route'),
       },
       {
         path: 'users',
@@ -50,8 +54,12 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'extra',
-        loadChildren: () => import('../pages/rental-extras/route')
-      }
+        loadChildren: () => import('../pages/rental-extras/route'),
+      },
+      {
+        path: 'vehicles',
+        loadChildren: () => import('../pages/vehicles/route'),
+      },
     ],
   },
 ];

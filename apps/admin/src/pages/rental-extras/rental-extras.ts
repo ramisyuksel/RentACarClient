@@ -17,7 +17,7 @@ import { BreadcrumbModel } from '../../services/breadcrumb';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class RentalExtras {
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Ekstralar',
       icon: 'bi-plus-square',

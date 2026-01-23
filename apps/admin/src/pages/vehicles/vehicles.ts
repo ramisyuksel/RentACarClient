@@ -5,25 +5,23 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { FlexiGridModule } from 'flexi-grid';
-import Grid from '../../components/grid/grid';
-import { BreadcrumbModel } from '../../services/breadcrumb';
-import { RouterLink } from '@angular/router';
 import { Common } from '../../services/common';
+import Grid from '../../components/grid/grid';
+import { FlexiGridModule } from 'flexi-grid';
+import { BreadcrumbModel } from '../../services/breadcrumb';
 
 @Component({
-  selector: 'app-roles',
-  imports: [Grid, FlexiGridModule, RouterLink],
-  templateUrl: './roles.html',
+  imports: [Grid, FlexiGridModule],
+  templateUrl: './vehicles.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class Roles {
+export default class Vehicles {
   readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Roller',
-      icon: 'bi-clipboard2-check',
-      url: '/roles',
+      title: 'Araçlar',
+      icon: 'bi-car-front',
+      url: '/vehicles',
       isActive: true,
     },
   ]);

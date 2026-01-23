@@ -6,22 +6,30 @@ const router: Routes = [
   {
     path: '',
     loadComponent: () => import('./rental-extras'),
-    canActivate: [() => inject(Common).checkPermissionForRoute('extra:view')],
+    canActivate: [
+      () => inject(Common).checkPermissionForRoute('rental_extra:view'),
+    ],
   },
   {
     path: 'add',
     loadComponent: () => import('./create/create'),
-    canActivate: [() => inject(Common).checkPermissionForRoute('extra:create')],
+    canActivate: [
+      () => inject(Common).checkPermissionForRoute('rental_extra:create'),
+    ],
   },
   {
     path: 'edit/:id',
     loadComponent: () => import('./create/create'),
-    canActivate: [() => inject(Common).checkPermissionForRoute('extra:edit')],
+    canActivate: [
+      () => inject(Common).checkPermissionForRoute('rental_extra:edit'),
+    ],
   },
   {
     path: 'detail/:id',
     loadComponent: () => import('./detail/detail'),
-    canActivate: [() => inject(Common).checkPermissionForRoute('extra:view')],
+    canActivate: [
+      () => inject(Common).checkPermissionForRoute('rental_extra:view'),
+    ],
   },
 ];
 

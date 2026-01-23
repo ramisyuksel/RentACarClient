@@ -25,7 +25,7 @@ import Grid from '../../components/grid/grid';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Branches {
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Şubeler',
       icon: 'bi-buildings',

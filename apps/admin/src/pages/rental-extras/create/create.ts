@@ -40,7 +40,7 @@ import { FlexiToastService } from 'flexi-toast';
 })
 export default class Create {
   readonly id = signal<string | undefined>(undefined);
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Ekstralar',
       icon: 'bi-plus-square',
@@ -59,7 +59,7 @@ export default class Create {
       const res = await lastValueFrom(
         this.#http.getResource<RentalExtraModel>(`/rent/rental-extras/${this.id()}`)
       );
-      this.bredcrumbs.update((prev) => [
+      this.breadcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.name,
@@ -68,7 +68,7 @@ export default class Create {
           isActive: true,
         },
       ]);
-      this.#breadcrumb.reset(this.bredcrumbs());
+      this.#breadcrumb.reset(this.breadcrumbs());
       return res.data;
     },
   });
@@ -88,7 +88,7 @@ export default class Create {
       if (res['id']) {
         this.id.set(res['id']);
       } else {
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: 'Ekle',
@@ -97,7 +97,7 @@ export default class Create {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
       }
     });
   }
