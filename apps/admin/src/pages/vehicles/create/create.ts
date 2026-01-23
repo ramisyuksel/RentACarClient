@@ -35,6 +35,34 @@ export interface FeatureGroup {
   features: { key: string; label: string; icon: string }[];
 }
 
+export const brandList = [
+  'Toyota',
+  'Renault',
+  'Volkswagen',
+  'Ford',
+  'Fiat',
+  'Hyundai',
+  'Peugeot',
+  'Opel',
+  'Honda',
+  'BMW',
+];
+
+export const modelYearList = Array.from({ length: 21 }, (_, i) => 2010 + i); // 2010-2030 arası
+
+export const colorList = [
+  'Beyaz',
+  'Siyah',
+  'Gri',
+  'Kırmızı',
+  'Mavi',
+  'Yeşil',
+  'Sarı',
+  'Turuncu',
+  'Kahverengi',
+  'Mor',
+];
+
 @Component({
   imports: [
     Blank,
@@ -51,38 +79,16 @@ export interface FeatureGroup {
 })
 export default class Create {
   readonly id = signal<string | undefined>(undefined);
-  readonly breadcrumbs = signal<BreadcrumbModel[]>([
+  readonly bredcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Araçlar',
       icon: 'bi-car-front',
       url: '/vehicles',
     },
   ]);
-  readonly brandList = [
-    'Toyota',
-    'Renault',
-    'Volkswagen',
-    'Ford',
-    'Fiat',
-    'Hyundai',
-    'Peugeot',
-    'Opel',
-    'Honda',
-    'BMW',
-  ];
-  readonly modelYearList = Array.from({ length: 21 }, (_, i) => 2010 + i); // 2010-2030 arası
-  readonly colorList = [
-    'Beyaz',
-    'Siyah',
-    'Gri',
-    'Kırmızı',
-    'Mavi',
-    'Yeşil',
-    'Sarı',
-    'Turuncu',
-    'Kahverengi',
-    'Mor',
-  ];
+  readonly brandList = computed(() => brandList);
+  readonly modelYearList = computed(() => modelYearList);
+  readonly colorList = computed(() => colorList);
   readonly fuelTypeList = ['Benzin', 'Dizel', 'LPG', 'Elektrik', 'Hibrit'];
 
   readonly transmissionList = ['Manuel', 'Otomatik', 'CVT'];
@@ -191,7 +197,7 @@ export default class Create {
       const res = await lastValueFrom(
         this.#http.getResource<VehicleModel>(`/rent/vehicles/${this.id()}`)
       );
-      this.breadcrumbs.update((prev) => [
+      this.bredcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.brand + ' ' + res.data!.model,
@@ -200,7 +206,7 @@ export default class Create {
           isActive: true,
         },
       ]);
-      this.#breadcrumb.reset(this.breadcrumbs());
+      this.#breadcrumb.reset(this.bredcrumbs());
       return res.data;
     },
   });
@@ -243,7 +249,7 @@ export default class Create {
       if (res['id']) {
         this.id.set(res['id']);
       } else {
-        this.breadcrumbs.update((prev) => [
+        this.bredcrumbs.update((prev) => [
           ...prev,
           {
             title: 'Ekle',
@@ -252,7 +258,7 @@ export default class Create {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.breadcrumbs());
+        this.#breadcrumb.reset(this.bredcrumbs());
 
         const date = this.#date.transform(new Date(), 'yyyy-MM-dd')!;
         this.data.update((prev) => ({
@@ -454,7 +460,7 @@ export default class Create {
     if (this.fileData()) {
       return this.fileData();
     } else if (this.data().imageUrl) {
-      return `https://localhost:7207/images/${this.data().imageUrl}`;
+      return `https://localhost:7142/images/${this.data().imageUrl}`;
     } else {
       return '/no-noimage.png';
     }

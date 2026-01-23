@@ -19,9 +19,10 @@ import {
   ProtectionPackageModel,
 } from '../../../models/protection-package.model';
 import { ActivatedRoute } from '@angular/router';
+import { TrCurrencyPipe } from 'tr-currency';
 
 @Component({
-  imports: [Blank],
+  imports: [Blank, TrCurrencyPipe],
   templateUrl: './detail.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
