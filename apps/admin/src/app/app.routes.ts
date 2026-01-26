@@ -53,6 +53,10 @@ export const appRoutes: Route[] = [
         loadChildren: () => import('../pages/users/route'),
       },
       {
+        path: 'customers',
+        loadChildren: () => import('../pages/customers/route'),
+      },
+      {
         path: 'extra',
         loadChildren: () => import('../pages/rental-extras/route'),
       },
