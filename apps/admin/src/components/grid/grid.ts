@@ -50,6 +50,7 @@ export default class Grid implements AfterViewInit {
   readonly commandColumnWidth = input<string>('150px');
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input.required<string>();
+  readonly showIsActive = input<boolean>(true);
 
   readonly columns = contentChildren(FlexiGridColumnComponent, {
     descendants: true,
@@ -62,16 +63,24 @@ export default class Grid implements AfterViewInit {
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
-    let enpoint = this.endpoint() + '?$count=true';
-    const part = this.#grid.getODataEndpoint(this.state());
-    enpoint += `&${part}`;
+    let endpoint = this.endpoint();
 
-    console.log('endpoint ', enpoint);
-    return enpoint;
+    if (endpoint.includes('?')) {
+      endpoint += '&$count=true';
+    } else {
+      endpoint += '?$count=true';
+    }
+
+    const part = this.#grid.getODataEndpoint(this.state());
+    endpoint += `&${part}`;
+
+    console.log('endpoint ', endpoint);
+    return endpoint;
   });
   readonly data = computed(() => {
     console.log('value', this.result.value());
-    return this.result.value()?.value ?? []});
+    return this.result.value()?.value ?? [];
+  });
   readonly total = computed(() => this.result.value()?.['@odata.count'] ?? 0);
   readonly loading = computed(() => this.result.isLoading());
 

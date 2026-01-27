@@ -13,10 +13,10 @@
   [showIndex]="showIndex()"
 >
   <ng-template flexiGridCaptionCommandTemplate>
-    @if(commandTemplateRef() !== undefined){
+    @if (commandTemplateRef() !== undefined) {
       <ng-container *ngTemplateOutlet="commandTemplateRef()!;"></ng-container>
     }
-    @if(checkPermission(addOptions().permission)){
+    @if (checkPermission(addOptions().permission)) {
       <flexi-button
         btnColor="primary"
         btnIcon="add"
@@ -28,19 +28,21 @@
 
   <ng-content />
 
-  @if(showAudit()){
-    <flexi-grid-column
-      field="isActive"
-      title="Aktif Mi?"
-      filterType="boolean"
-      [booleanData]="['Aktif', 'Pasif']"
-      textAlign="center" />
+  @if (showAudit()) {
+    @if (showIsActive()) {
+      <flexi-grid-column
+        field="isActive"
+        title="Aktif Mi?"
+        filterType="boolean"
+        [booleanData]="['Aktif', 'Pasif']"
+        textAlign="center" />
+    }
     <flexi-grid-column
       field="createdAt"
       title="Oluturulma Tarihi"
       filterType="date-time"
       format="dd MMM yyyy HH:mm:ss"
-      width="220px"/>
+      width="220px" />
     <flexi-grid-column field="createdFullName" title="Oluşturan" />
     <flexi-grid-column
       field="updatedAt"
@@ -51,12 +53,12 @@
   }
 
   <ng-template flexiGridColumnCommandTemplate let-item>
-    @if(columnCommandTemplateRef() !== undefined){
+    @if (columnCommandTemplateRef() !== undefined) {
       <ng-container *ngTemplateOutlet="columnCommandTemplateRef()!; context:{ $implicit: item }">
       </ng-container>
     }
 
-    @if(checkPermission(detailOptions().permission)){
+    @if (checkPermission(detailOptions().permission)) {
       <flexi-button
         btnColor="indigo"
         btnIcon="zoom_in"
@@ -65,7 +67,7 @@
         flexiTooltip
         [routerLink]="[this.detailOptions().url,item.id]" />
     }
-    @if(checkPermission(editOptions().permission)){
+    @if (checkPermission(editOptions().permission)) {
       <flexi-button
         btnColor="info"
         btnIcon="edit"
@@ -74,7 +76,7 @@
         flexiTooltip
         [routerLink]="[this.editOptions().url,item.id]" />
     }
-    @if(checkPermission(deleteOptions().permission)){
+    @if (checkPermission(deleteOptions().permission)) {
       <flexi-button
         btnColor="danger"
         btnIcon="delete"

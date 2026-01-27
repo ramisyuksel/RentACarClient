@@ -63,6 +63,10 @@ export const colorList = [
   'Mor',
 ];
 
+export const fuelTypeList = ['Benzin', 'Dizel', 'LPG', 'Elektrik', 'Hibrit'];
+
+export const transmissionList = ['Manuel', 'Otomatik', 'CVT'];
+
 @Component({
   imports: [
     Blank,
@@ -79,7 +83,7 @@ export const colorList = [
 })
 export default class Create {
   readonly id = signal<string | undefined>(undefined);
-  readonly bredcrumbs = signal<BreadcrumbModel[]>([
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
       title: 'Araçlar',
       icon: 'bi-car-front',
@@ -89,9 +93,8 @@ export default class Create {
   readonly brandList = computed(() => brandList);
   readonly modelYearList = computed(() => modelYearList);
   readonly colorList = computed(() => colorList);
-  readonly fuelTypeList = ['Benzin', 'Dizel', 'LPG', 'Elektrik', 'Hibrit'];
-
-  readonly transmissionList = ['Manuel', 'Otomatik', 'CVT'];
+  readonly fuelTypeList = () => fuelTypeList;
+  readonly transmissionList = () => transmissionList;
 
   readonly seatCountList = [
     { value: 2, label: '2 Kişi' },
@@ -197,7 +200,7 @@ export default class Create {
       const res = await lastValueFrom(
         this.#http.getResource<VehicleModel>(`/rent/vehicles/${this.id()}`)
       );
-      this.bredcrumbs.update((prev) => [
+      this.breadcrumbs.update((prev) => [
         ...prev,
         {
           title: res.data!.brand + ' ' + res.data!.model,
@@ -206,7 +209,7 @@ export default class Create {
           isActive: true,
         },
       ]);
-      this.#breadcrumb.reset(this.bredcrumbs());
+      this.#breadcrumb.reset(this.breadcrumbs());
       return res.data;
     },
   });
@@ -249,7 +252,7 @@ export default class Create {
       if (res['id']) {
         this.id.set(res['id']);
       } else {
-        this.bredcrumbs.update((prev) => [
+        this.breadcrumbs.update((prev) => [
           ...prev,
           {
             title: 'Ekle',
@@ -258,7 +261,7 @@ export default class Create {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.bredcrumbs());
+        this.#breadcrumb.reset(this.breadcrumbs());
 
         const date = this.#date.transform(new Date(), 'yyyy-MM-dd')!;
         this.data.update((prev) => ({
