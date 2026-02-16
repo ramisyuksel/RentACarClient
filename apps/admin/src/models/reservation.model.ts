@@ -33,9 +33,9 @@ export interface ReservationModel extends EntityModel {
     tractionType: string;
     kilometer: number;
   };
-  protectionPackageId: string;
+  protectionPackageId?: string | null;
   protectionPackagePrice: number;
-  protectionPackageName: string;
+  protectionPackageName?: string | null;
   reservationExtras: {
     extraId: string;
     extraName: string;
@@ -79,9 +79,7 @@ export const initialReservation: ReservationModel = {
     tractionType: '',
     kilometer: 0,
   },
-  protectionPackageId: '',
   protectionPackagePrice: 0,
-  protectionPackageName: '',
   reservationExtras: [],
   note: '',
   total: 0,

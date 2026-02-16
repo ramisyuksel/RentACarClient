@@ -4,22 +4,23 @@ import {
   computed,
   effect,
   inject,
+  resource,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import {
-  BreadcrumbModel,
-  BreadcrumbService,
-} from '../../../services/breadcrumb';
-import Blank from '../../../components/blank/blank';
+import { ActivatedRoute } from '@angular/router';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
+import { TrCurrencyPipe } from 'tr-currency';
 import {
   initialProtectionPackage,
   ProtectionPackageModel,
 } from '../../../models/protection-package.model';
-import { ActivatedRoute } from '@angular/router';
-import { TrCurrencyPipe } from 'tr-currency';
+import Blank from '../../../components/blank/blank';
+import {
+  BreadcrumbModel,
+  BreadcrumbService,
+} from '../../../services/breadcrumb';
+import { Result } from '../../../models/result.model';
 
 @Component({
   imports: [Blank, TrCurrencyPipe],
@@ -27,9 +28,9 @@ import { TrCurrencyPipe } from 'tr-currency';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class Detail {
+export default class ProtectionPackageDetail {
   readonly id = signal<string>('');
-  readonly breadcrumbs = signal<BreadcrumbModel[]>([]);
+  readonly bredcrumbs = signal<BreadcrumbModel[]>([]);
   readonly result = httpResource<Result<ProtectionPackageModel>>(
     () => `/rent/protection-packages/${this.id()}`
   );
@@ -37,7 +38,7 @@ export default class Detail {
     () => this.result.value()?.data ?? initialProtectionPackage
   );
   readonly loading = computed(() => this.result.isLoading());
-  readonly pageTitle = computed(() => this.data().name);
+  readonly pageTitle = signal<string>('Güvence Paketi Detay');
 
   readonly #activated = inject(ActivatedRoute);
   readonly #breadcrumb = inject(BreadcrumbService);
@@ -50,15 +51,15 @@ export default class Detail {
     effect(() => {
       const breadCrumbs: BreadcrumbModel[] = [
         {
-          title: 'Koruma Paketleri',
+          title: 'Güvence Paketleri',
           icon: 'bi-shield-check',
           url: '/protection-packages',
         },
       ];
 
       if (this.data()) {
-        this.breadcrumbs.set(breadCrumbs);
-        this.breadcrumbs.update((prev) => [
+        this.bredcrumbs.set(breadCrumbs);
+        this.bredcrumbs.update((prev) => [
           ...prev,
           {
             title: this.data().name,
@@ -67,7 +68,7 @@ export default class Detail {
             isActive: true,
           },
         ]);
-        this.#breadcrumb.reset(this.breadcrumbs());
+        this.#breadcrumb.reset(this.bredcrumbs());
       }
     });
   }

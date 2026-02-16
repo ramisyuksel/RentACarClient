@@ -11,14 +11,14 @@ export class Common {
   readonly #router = inject(Router);
 
   checkPermission(permission: string) {
-   if (this.decode().role === 'sys_admin') return true;
+    if (this.decode().role === 'sys_admin') return true;
 
     if (this.decode().permissions.some((i) => i === permission)) return true;
 
     return false;
   }
 
-  checkPermissionForRoute(permission: string){
+  checkPermissionForRoute(permission: string) {
     const res = this.checkPermission(permission);
 
     if (!res) {
@@ -27,4 +27,5 @@ export class Common {
 
     return res;
   }
-  }
+}
+

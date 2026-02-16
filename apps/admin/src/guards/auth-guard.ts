@@ -28,7 +28,6 @@ export const authGuard: CanActivateChildFn = (childRoute, state) => {
     common.decode().branch = decode['branch'];
     common.decode().branchId = decode['branchId'];
 
-  console.log(common.decode());
 
     const now = new Date().getTime() / 1000;
     const exp = decode.exp ?? 0;

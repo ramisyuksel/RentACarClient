@@ -91,8 +91,6 @@ export default class Permissions {
       this.id.set(res['id']);
     });
 
-    console.log(this.role);
-
     effect(() => {
       this.breadcrumbs.set([
         {

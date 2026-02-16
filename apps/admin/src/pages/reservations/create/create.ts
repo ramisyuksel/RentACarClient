@@ -1,3 +1,5 @@
+import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { httpResource } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,36 +10,33 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
-import Blank from '../../../components/blank/blank';
 import { FormsModule, NgForm } from '@angular/forms';
-import { FormValidateDirective } from 'form-validate-angular';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FlexiGridModule, FlexiGridService, StateModel } from 'flexi-grid';
 import { FlexiPopupModule } from 'flexi-popup';
-import { httpResource } from '@angular/common/http';
+import { FlexiSelectModule } from 'flexi-select';
+import { FlexiToastService } from 'flexi-toast';
+import { FormValidateDirective } from 'form-validate-angular';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { lastValueFrom } from 'rxjs';
+import { TrCurrencyPipe } from 'tr-currency';
+import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
+import { CustomerModel, initialCustomer } from '../../../models/customer.model';
+import Blank from '../../../components/blank/blank';
+import { VehiclePipe } from '../../../pipes/vehicle-pipe';
 import {
   BreadcrumbModel,
   BreadcrumbService,
 } from '../../../services/breadcrumb';
-import { CustomerModel, initialCustomer } from '../../../models/customer.model';
-import { lastValueFrom } from 'rxjs';
-import {
-  initialReservation,
-  ReservationModel,
-} from '../../../models/reservation.model';
+import { initialReservation, ReservationModel } from '../../../models/reservation.model';
 import { ODataModel } from '../../../models/odata.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/http';
-import { FlexiToastService } from 'flexi-toast';
-import { FlexiSelectModule } from 'flexi-select';
 import { BranchModel } from '../../../models/branch.model';
-import { Common } from '../../../services/common';
-import { TrCurrencyPipe } from 'tr-currency';
 import { VehicleModel } from '../../../models/vehicle.model';
-import { VehiclePipe } from '../../../pipes/vehicle-pipe';
 import { CategoryModel } from '../../../models/category.model';
-import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
+import { ProtectionPackageModel } from '../../../models/protection-package.model';
+import { HttpService } from '../../../services/http';
+import { Common } from '../../../services/common';
+import { RentalExtraModel } from '../../../models/rental-extra.model';
 
 @Component({
   imports: [
@@ -94,6 +93,16 @@ export default class Create {
         },
       ]);
       this.#breadcrumb.reset(this.bredcrumbs());
+
+      const customer = res.data!.customer;
+      this.selectedCustomer.set({
+        ...initialCustomer,
+        id: res.data!.customerId,
+        fullName: customer.fullName,
+        fullAddress: customer.fullAddress,
+        phoneNumber: customer.phoneNumber,
+        email: customer.email,
+      });
       return res.data;
     },
   });
@@ -121,13 +130,13 @@ export default class Create {
   );
   readonly customersLoading = computed(() => this.customersResult.isLoading());
   readonly selectedCustomer = signal<CustomerModel | undefined>(undefined);
-  readonly branchesResult = httpResource<ODataModel<BranchModel>>(
+  readonly branchResult = httpResource<ODataModel<BranchModel>>(
     () => '/rent/odata/branches'
   );
   readonly branchesData = computed(
-    () => this.branchesResult.value()?.value ?? []
+    () => this.branchResult.value()?.value ?? []
   );
-  readonly branchesLoading = computed(() => this.branchesResult.isLoading());
+  readonly branchesLoading = computed(() => this.branchResult.isLoading());
   readonly isAdmin = computed(() => this.#common.decode().role === 'sys_admin');
   readonly timeData = signal<string[]>(
     Array.from({ length: 31 }, (_, i) => {
@@ -158,6 +167,21 @@ export default class Create {
     transmission: '',
   });
   readonly selectedVehicle = signal<VehicleModel | undefined>(undefined);
+  readonly protectionPackageResult = httpResource<
+    ODataModel<ProtectionPackageModel>
+  >(() => '/rent/odata/protection-packages?$orderby=OrderNumber');
+  readonly protectionPackagesData = computed(
+    () => this.protectionPackageResult.value()?.value ?? []
+  );
+  readonly protectionPackagesLoading = computed(() =>
+    this.protectionPackageResult.isLoading()
+  );
+  readonly extraResult = httpResource<ODataModel<RentalExtraModel>>(
+    () => '/rent/odata/rental-extras'
+  );
+  readonly extrasData = computed(() => this.extraResult.value()?.value ?? []);
+  readonly extrasLoading = computed(() => this.extraResult.isLoading());
+  readonly totalExtra = signal<number>(0);
 
   readonly #breadcrumb = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
@@ -317,7 +341,7 @@ export default class Create {
   }
 
   getVehicleImage(vehicle: VehicleModel) {
-    const endpoint = 'https://localhost:7142/images/';
+    const endpoint = 'https://localhost:7207/images/';
     return endpoint + vehicle.imageUrl;
   }
 
@@ -328,7 +352,60 @@ export default class Create {
       vehicleId: item.id,
       vehicle: item,
       vehicleDailyPrice: item.dailyPrice,
-      total: item.dailyPrice * prev.totalDay,
     }));
+    this.calculateTotal();
+  }
+
+  selectProtectionPackage(val: ProtectionPackageModel) {
+    if (val.id === this.data().protectionPackageId) {
+      this.data.update((prev) => ({
+        ...prev,
+        protectionPackageId: '',
+        protectionPackagePrice: 0,
+        protectionPackageName: '',
+      }));
+    } else {
+      this.data.update((prev) => ({
+        ...prev,
+        protectionPackageId: val.id,
+        protectionPackagePrice: val.price,
+        protectionPackageName: val.name,
+      }));
+    }
+    this.calculateTotal();
+  }
+
+  selectExtra(val: RentalExtraModel) {
+    const extras = [...this.data().reservationExtras];
+    const index = extras.findIndex((i) => i.extraId === val.id);
+
+    if (index !== -1) {
+      extras.splice(index, 1);
+    } else {
+      extras.push({ extraId: val.id, price: val.price, extraName: val.name });
+    }
+
+    this.data.update((prev) => ({ ...prev, reservationExtras: extras }));
+    this.calculateTotal();
+  }
+
+  calculateTotal() {
+    const totalVehicle = this.data().vehicleDailyPrice * this.data().totalDay;
+    const totalProtectionpackage =
+      this.data().protectionPackagePrice * this.data().totalDay;
+    let totalExtra = 0;
+    this.data().reservationExtras.forEach((val) => {
+      totalExtra += val.price * this.data().totalDay;
+    });
+    this.totalExtra.set(totalExtra);
+    const total = totalVehicle + totalProtectionpackage + totalExtra;
+    this.data.update((prev) => ({
+      ...prev,
+      total: total,
+    }));
+  }
+
+  checkedExtra(val: RentalExtraModel) {
+    return this.data().reservationExtras.some((i) => i.extraId === val.id);
   }
 }

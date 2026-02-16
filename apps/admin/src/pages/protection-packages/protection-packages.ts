@@ -5,10 +5,10 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { Common } from '../../services/common';
-import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
+import Grid from '../../components/grid/grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [Grid, FlexiGridModule],
@@ -19,7 +19,7 @@ import { BreadcrumbModel } from '../../services/breadcrumb';
 export default class ProtectionPackages {
   readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Koruma Paketleri',
+      title: 'Güvence Paketleri',
       icon: 'bi-shield-check',
       url: '/protection-packages',
       isActive: true,
