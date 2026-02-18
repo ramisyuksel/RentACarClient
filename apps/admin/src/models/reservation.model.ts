@@ -1,6 +1,7 @@
 import { EntityModel } from "./entity.model";
 
 export interface ReservationModel extends EntityModel {
+  reservationNumber: string;
   customerId: string;
   customer: {
     fullName: string;
@@ -35,6 +36,7 @@ export interface ReservationModel extends EntityModel {
     tractionType: string;
     kilometer: number;
     imageUrl: string;
+    plate: string;
   };
   protectionPackageId: string;
   protectionPackagePrice: number;
@@ -49,32 +51,41 @@ export interface ReservationModel extends EntityModel {
   status: string;
   totalDay: number;
   creditCartInformation: {
-    cartNumber: string,
-    owner:string;
+    cartNumber: string;
+    owner: string;
     expiry: string;
     ccv: string;
-  }
+  };
+  paymentInformation: {
+    cartNumber: string;
+    owner: string;
+  };
+  histories: {
+    title: string;
+    description: string;
+    createdAt: string }[];
 }
 
 export const initialReservation: ReservationModel = {
+  reservationNumber: '',
   customerId: '',
   customer: {
     fullName: '',
     identityNumber: '',
     phoneNumber: '',
     email: '',
-    fullAddress: ''
+    fullAddress: '',
   },
   pickUp: {
     name: '',
     fullAddress: '',
-    phoneNumber: ''
+    phoneNumber: '',
   },
   pickUpDate: '',
-  pickUpTime: '09:00',
+  pickUpTime: '09:00:00',
   pickUpDateTime: '',
   deliveryDate: '',
-  deliveryTime: '09:00',
+  deliveryTime: '09:00:00',
   deliveryDateTime: '',
   vehicleId: '',
   vehicleDailyPrice: 0,
@@ -89,7 +100,8 @@ export const initialReservation: ReservationModel = {
     seatCount: 0,
     tractionType: '',
     kilometer: 0,
-    imageUrl: ''
+    imageUrl: '',
+    plate: '',
   },
   protectionPackageId: '',
   protectionPackagePrice: 0,
@@ -103,11 +115,16 @@ export const initialReservation: ReservationModel = {
     cartNumber: '',
     owner: '',
     expiry: '',
-    ccv: ''
+    ccv: '',
   },
+  paymentInformation: {
+    cartNumber: '',
+    owner: '',
+  },
+  histories: [],
   id: '',
   isActive: true,
   createdAt: '',
   createdBy: '',
-  createdFullName: ''
+  createdFullName: '',
 };

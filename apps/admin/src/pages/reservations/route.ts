@@ -20,11 +20,11 @@ const router: Routes = [
       loadComponent: () => import('./create/create'),
       canActivate: [() => inject(Common).checkPermissionForRoute('reservation:edit')]
   },
-  // {
-  //     path: 'detail/:id',
-  //     loadComponent: () => import('./detail/detail'),
-  //     canActivate: [() => inject(Common).checkPermissionForRoute('vehicle:view')]
-  // }
+  {
+      path: 'detail/:id',
+      loadComponent: () => import('./detail/detail'),
+      canActivate: [() => inject(Common).checkPermissionForRoute('vehicle:view')]
+  }
 ];
 
 export default router;
