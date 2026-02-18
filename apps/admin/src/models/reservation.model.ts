@@ -1,4 +1,4 @@
-import { EntityModel } from './entity.model';
+import { EntityModel } from "./entity.model";
 
 export interface ReservationModel extends EntityModel {
   customerId: string;
@@ -17,8 +17,10 @@ export interface ReservationModel extends EntityModel {
   };
   pickUpDate: string;
   pickUpTime: string;
+  pickUpDateTime: string;
   deliveryDate: string;
   deliveryTime: string;
+  deliveryDateTime: string;
   vehicleId: string;
   vehicleDailyPrice: number;
   vehicle: {
@@ -32,10 +34,11 @@ export interface ReservationModel extends EntityModel {
     seatCount: number;
     tractionType: string;
     kilometer: number;
+    imageUrl: string;
   };
-  protectionPackageId?: string | null;
+  protectionPackageId: string;
   protectionPackagePrice: number;
-  protectionPackageName?: string | null;
+  protectionPackageName: string;
   reservationExtras: {
     extraId: string;
     extraName: string;
@@ -45,6 +48,12 @@ export interface ReservationModel extends EntityModel {
   total: number;
   status: string;
   totalDay: number;
+  creditCartInformation: {
+    cartNumber: string,
+    owner:string;
+    expiry: string;
+    ccv: string;
+  }
 }
 
 export const initialReservation: ReservationModel = {
@@ -54,17 +63,19 @@ export const initialReservation: ReservationModel = {
     identityNumber: '',
     phoneNumber: '',
     email: '',
-    fullAddress: '',
+    fullAddress: ''
   },
   pickUp: {
     name: '',
     fullAddress: '',
-    phoneNumber: '',
+    phoneNumber: ''
   },
   pickUpDate: '',
   pickUpTime: '09:00',
+  pickUpDateTime: '',
   deliveryDate: '',
   deliveryTime: '09:00',
+  deliveryDateTime: '',
   vehicleId: '',
   vehicleDailyPrice: 0,
   vehicle: {
@@ -78,16 +89,25 @@ export const initialReservation: ReservationModel = {
     seatCount: 0,
     tractionType: '',
     kilometer: 0,
+    imageUrl: ''
   },
+  protectionPackageId: '',
   protectionPackagePrice: 0,
+  protectionPackageName: '',
   reservationExtras: [],
   note: '',
   total: 0,
   status: '',
   totalDay: 0,
+  creditCartInformation: {
+    cartNumber: '',
+    owner: '',
+    expiry: '',
+    ccv: ''
+  },
   id: '',
   isActive: true,
   createdAt: '',
   createdBy: '',
-  createdFullName: '',
+  createdFullName: ''
 };
