@@ -1,10 +1,25 @@
 import { httpResource } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, contentChild, contentChildren, inject, input,
-  OnInit, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  contentChild,
+  contentChildren,
+  inject,
+  input,
+  OnInit,
+  output,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   FlexiGridColumnComponent,
   FlexiGridModule,
+  FlexiGridReorderModel,
   FlexiGridService,
+  StateFilterModel,
   StateModel,
   StateSortModel,
 } from 'flexi-grid';
@@ -23,16 +38,12 @@ export interface btnOptions{
 
 @Component({
   selector: 'app-grid',
-  imports: [
-    FlexiGridModule,
-    RouterLink,
-    NgTemplateOutlet
-  ],
+  imports: [FlexiGridModule, RouterLink, NgTemplateOutlet],
   templateUrl: './grid.html',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class Grid implements OnInit, AfterViewInit {
+export default class Grid implements AfterViewInit {
   readonly pageTitle = input.required<string>();
   readonly endpoint = input.required<string>();
   readonly showAudit = input<boolean>(true);
@@ -41,23 +52,32 @@ export default class Grid implements OnInit, AfterViewInit {
   readonly detailOptions = input.required<btnOptions>();
   readonly deleteOptions = input.required<btnOptions>();
   readonly breadcrumbs = input.required<BreadcrumbModel[]>();
-  readonly commandColumnWidth = input<string>("150px");
+  readonly commandColumnWidth = input<string>('150px');
   readonly showIndex = input<boolean>(true);
   readonly captionTitle = input.required<string>();
   readonly showIsActive = input<boolean>(true);
-  readonly sort = input<StateSortModel>({field: 'createdAt', dir: 'desc'});
+  readonly sort = input<StateSortModel>({ field: '', dir: 'asc' });
+  readonly filter = input<StateFilterModel[]>([]);
+  readonly reorderable = input<boolean>(false);
 
-  readonly columns = contentChildren(FlexiGridColumnComponent, {descendants: true});
-  readonly commandTemplateRef = contentChild<TemplateRef<any>>("commandTemplate");
-  readonly columnCommandTemplateRef = contentChild<TemplateRef<any>>('columnCommandTemplate');
+  readonly onReorder = output<FlexiGridReorderModel>();
+
+  readonly columns = contentChildren(FlexiGridColumnComponent, {
+    descendants: true,
+  });
+  readonly commandTemplateRef =
+    contentChild<TemplateRef<any>>('commandTemplate');
+  readonly columnCommandTemplateRef = contentChild<TemplateRef<any>>(
+    'columnCommandTemplate'
+  );
 
   readonly state = signal<StateModel>(new StateModel());
   readonly result = httpResource<ODataModel<any>>(() => {
     let enpoint = this.endpoint();
-    if(enpoint.includes("?")){
-      enpoint += '&$count=true'
-    }else{
-      enpoint += '?$count=true'
+    if (enpoint.includes('?')) {
+      enpoint += '&$count=true';
+    } else {
+      enpoint += '?$count=true';
     }
     const part = this.#grid.getODataEndpoint(this.state());
     enpoint += `&${part}`;
@@ -74,30 +94,28 @@ export default class Grid implements OnInit, AfterViewInit {
   readonly #http = inject(HttpService);
   readonly #common = inject(Common);
 
-  ngOnInit(){
-    console.log('sort : ', this.sort());
-    this.state.update(prev => ({...prev, sort: this.sort()}));
-    console.log('state : ', this.state());
-  }
-
   ngAfterViewInit(): void {
     this.#breadcrumb.reset(this.breadcrumbs());
   }
 
-  dataStateChange(state: StateModel){
+  dataStateChange(state: StateModel) {
     this.state.set(state);
   }
 
-  delete(id: string){
-    this.#toast.showSwal('Sil?', 'Kaydı silmek istiyor musunuz?','Sil', () => {
-      this.#http.delete(`${this.deleteOptions().url}/${id}`,res => {
+  delete(id: string) {
+    this.#toast.showSwal('Sil?', 'Kaydı silmek istiyor musunuz?', 'Sil', () => {
+      this.#http.delete(`${this.deleteOptions().url}/${id}`, (res) => {
         //toast ile mesaj göster
         this.result.reload();
       });
-    })
+    });
   }
 
-  checkPermission(permission: string){
+  checkPermission(permission: string) {
     return this.#common.checkPermission(permission);
+  }
+
+  onReorderMethod(event: FlexiGridReorderModel) {
+    this.onReorder.emit(event);
   }
 }

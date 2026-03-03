@@ -5725,12 +5725,12 @@ body {
 }
 
 .selected-damages .major-damage {
-  color: #dc3545;
+  color: #ac3c47;
   font-weight: 600;
 }
 
 .selected-damages .critical-damage {
-  color: #721c24;
+  color: #640912;
   font-weight: 700;
 }
 
@@ -6860,10 +6860,6 @@ a {
 
 .flexi-treeview-caption h2 {
   font-size: 25px;
-}
-
-.flexi-select-div {
-  font-size: 15px !important;
 }
 
 /* Service Items */
