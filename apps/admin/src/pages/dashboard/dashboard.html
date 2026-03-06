@@ -10,13 +10,12 @@
               <i class="bi bi-calendar-check"></i>
             </div>
             <div class="stat-info">
-              <h3 class="stat-number">127</h3>
-              <p class="stat-label">Aktif Rezervasyonlar</p>
-              <div class="stat-change positive">
-                <i class="bi bi-arrow-up"></i>
-                <span>+12%</span>
-                <small>bu hafta</small>
-              </div>
+              <h3 class="stat-number">{{activeReservationCount()}}</h3>              <p class="stat-label">Aktif Rezervasyonlar</p>
+<!--              <div class="stat-change positive">-->
+<!--                <i class="bi bi-arrow-up"></i>-->
+<!--                <span>+12%</span>-->
+<!--                <small>bu hafta</small>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -31,13 +30,13 @@
               <i class="bi bi-car-front"></i>
             </div>
             <div class="stat-info">
-              <h3 class="stat-number">89</h3>
-              <p class="stat-label">Müsait Araçlar</p>
-              <div class="stat-change negative">
-                <i class="bi bi-arrow-down"></i>
-                <span>-5%</span>
-                <small>dün</small>
-              </div>
+              <h3 class="stat-number">{{ totalVehicleCount() }}</h3>
+              <p class="stat-label">Toplam Araç Sayısı</p>
+<!--              <div class="stat-change negative">-->
+<!--                <i class="bi bi-arrow-down"></i>-->
+<!--                <span>-5%</span>-->
+<!--                <small>dün</small>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -52,13 +51,13 @@
               <i class="bi bi-currency-dollar"></i>
             </div>
             <div class="stat-info">
-              <h3 class="stat-number">₺47.830</h3>
+              <h3 class="stat-number">{{ dailyIncome() | trCurrency:'₺' }}</h3>
               <p class="stat-label">Günlük Gelir</p>
-              <div class="stat-change positive">
-                <i class="bi bi-arrow-up"></i>
-                <span>+18%</span>
-                <small>dün</small>
-              </div>
+<!--              <div class="stat-change positive">-->
+<!--                <i class="bi bi-arrow-up"></i>-->
+<!--                <span>+18%</span>-->
+<!--                <small>dün</small>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -73,13 +72,13 @@
               <i class="bi bi-people"></i>
             </div>
             <div class="stat-info">
-              <h3 class="stat-number">1.247</h3>
+              <h3 class="stat-number">{{ totalCustomerCount() }}</h3>
               <p class="stat-label">Toplam Müşteri</p>
-              <div class="stat-change positive">
-                <i class="bi bi-arrow-up"></i>
-                <span>+3%</span>
-                <small>bu ay</small>
-              </div>
+<!--              <div class="stat-change positive">-->
+<!--                <i class="bi bi-arrow-up"></i>-->
+<!--                <span>+3%</span>-->
+<!--                <small>bu ay</small>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -107,7 +106,7 @@
         </div>
         <div class="card-body">
           <div class="chart-container">
-            <canvas id="revenueChart" height="300"></canvas>
+            <canvas #revenueChartCanvas id="revenueChart" height="300"></canvas>
           </div>
         </div>
       </div>
@@ -121,7 +120,7 @@
         </div>
         <div class="card-body">
           <div class="chart-container">
-            <canvas id="bookingStatusChart" height="250"></canvas>
+            <canvas #reservationStatusChartCanvas id="reservationStatusChart" height="250"></canvas>
           </div>
           <div class="chart-legend mt-3">
             <div class="legend-item">

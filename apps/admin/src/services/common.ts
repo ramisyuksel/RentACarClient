@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { DecodeModel, initialDecode } from '../models/decode.model';
+import { DecodeModel, initialDecode } from '@shared/models/decode.model';
 
 @Injectable({
   providedIn: 'root',

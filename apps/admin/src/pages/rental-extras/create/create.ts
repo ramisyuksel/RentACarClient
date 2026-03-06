@@ -11,7 +11,7 @@ import {
 import {
   initialRentalExtra,
   RentalExtraModel,
-} from '../../../models/rental-extra.model';
+} from '@shared/models/rental-extra.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import Blank from '../../../components/blank/blank';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -23,7 +23,7 @@ import {
 } from '../../../services/breadcrumb';
 import { lastValueFrom } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

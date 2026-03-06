@@ -7,7 +7,7 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { initialReservation, ReservationModel } from '../../../models/reservation.model';
+import { initialReservation, ReservationModel } from '@shared/models/reservation.model';
 import Blank from '../../../components/blank/blank';
 import { DatePipe, NgClass } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
@@ -17,7 +17,7 @@ import {
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
+import { Result } from '@shared/models/result.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

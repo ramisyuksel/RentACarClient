@@ -13,10 +13,10 @@ import {
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
-import { initialRole, RoleModel } from '../../../models/role.model';
+import { Result } from '@shared/models/result.model';
+import { initialRole, RoleModel } from '@shared/models/role.model';
 import { ActivatedRoute } from '@angular/router';
-import { initialUser, UserModel } from '../../../models/user.model';
+import { initialUser, UserModel } from '@shared/models/user.model';
 
 @Component({
   imports: [Blank],

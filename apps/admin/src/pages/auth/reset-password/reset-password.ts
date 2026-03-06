@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlexiToastService } from 'flexi-toast';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { httpResource } from '@angular/common/http';

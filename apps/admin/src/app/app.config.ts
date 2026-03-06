@@ -7,9 +7,9 @@ import {
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { HttpContextToken, provideHttpClient, withInterceptors } from '@angular/common/http';
-import { httpInterceptor } from '../interceptors/http-interceptor';
-import { errorInterceptor } from '../interceptors/error-interceptor';
-import { authInterceptor } from '../interceptors/auth-interceptor';
+import { httpInterceptor } from '@shared/interceptors/http-interceptor';
+import { errorInterceptor } from '@shared/interceptors/error-interceptor';
+import { authInterceptor } from '@shared/interceptors/auth-interceptor';
 import { provideNgxMask } from 'ngx-mask';
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';

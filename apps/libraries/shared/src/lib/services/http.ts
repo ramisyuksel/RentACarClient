@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpContext, HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './error';
 import { Result } from '../models/result.model';
-import { SKIP_ERROR_HANDLER } from '../app/app.config';
+import { SKIP_ERROR_HANDLER } from '../../../../../admin/src/app/app.config';
 
 @Injectable({
   providedIn: 'root',

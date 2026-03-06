@@ -14,13 +14,13 @@ import { TrCurrencyPipe } from 'tr-currency';
 import {
   initialProtectionPackage,
   ProtectionPackageModel,
-} from '../../../models/protection-package.model';
+} from '@shared/models/protection-package.model';
 import Blank from '../../../components/blank/blank';
 import {
   BreadcrumbModel,
   BreadcrumbService,
 } from '../../../services/breadcrumb';
-import { Result } from '../../../models/result.model';
+import { Result } from '@shared/models/result.model';
 
 @Component({
   imports: [Blank, TrCurrencyPipe],

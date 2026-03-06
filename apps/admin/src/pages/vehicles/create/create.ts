@@ -21,13 +21,13 @@ import { DatePipe, NgClass } from '@angular/common';
 import { NgxMaskDirective } from 'ngx-mask';
 import { FlexiSelectModule } from 'flexi-select';
 import { lastValueFrom } from 'rxjs';
-import { initialVehicle, VehicleModel } from '../../../models/vehicle.model';
-import { BranchModel } from '../../../models/branch.model';
+import { initialVehicle, VehicleModel } from '@shared/models/vehicle.model';
+import { BranchModel } from '@shared/models/branch.model';
 import { httpResource } from '@angular/common/http';
-import { ODataModel } from '../../../models/odata.model';
-import { CategoryModel } from '../../../models/category.model';
+import { ODataModel } from '@shared/models/odata.model';
+import { CategoryModel } from '@shared/models/category.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 export interface FeatureGroup {

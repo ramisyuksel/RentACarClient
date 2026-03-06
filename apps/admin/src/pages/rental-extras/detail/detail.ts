@@ -10,8 +10,8 @@ import {
 import {
   initialRentalExtra,
   RentalExtraModel,
-} from '../../../models/rental-extra.model';
-import { Result } from '../../../models/result.model';
+} from '@shared/models/rental-extra.model';
+import { Result } from '@shared/models/result.model';
 import Blank from '../../../components/blank/blank';
 import { httpResource } from '@angular/common/http';
 import {

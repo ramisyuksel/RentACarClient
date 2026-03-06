@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Result } from '../../../models/result.model';
+import { Result } from '@shared/models/result.model';
 import { FormValidateDirective } from 'form-validate-angular';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

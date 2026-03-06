@@ -18,9 +18,9 @@ import {
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { lastValueFrom } from 'rxjs';
-import { CustomerModel, initialCustomer } from '../../../models/customer.model';
+import { CustomerModel, initialCustomer } from '@shared/models/customer.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

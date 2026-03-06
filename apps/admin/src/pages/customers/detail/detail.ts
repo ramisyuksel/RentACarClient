@@ -14,8 +14,8 @@ import {
 import Blank from '../../../components/blank/blank';
 import { DatePipe } from '@angular/common';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
-import { CustomerModel, initialCustomer } from '../../../models/customer.model';
+import { Result } from '@shared/models/result.model';
+import { CustomerModel, initialCustomer } from '@shared/models/customer.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

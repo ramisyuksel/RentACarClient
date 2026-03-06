@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
 import { BreadcrumbModel, BreadcrumbService } from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
-import { BranchModel, initialBranch } from '../../../models/branch.model';
+import { Result } from '@shared/models/result.model';
+import { BranchModel, initialBranch } from '@shared/models/branch.model';
 import { ActivatedRoute } from '@angular/router';
 import Blank from '../../../components/blank/blank';
-import { initialRole, RoleModel } from '../../../models/role.model';
+import { initialRole, RoleModel } from '@shared/models/role.model';
 
 @Component({
   imports: [Blank],

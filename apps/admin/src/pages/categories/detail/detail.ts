@@ -7,14 +7,14 @@ import {
   signal,
   ViewEncapsulation,
 } from '@angular/core';
-import { Result } from '../../../models/result.model';
+import { Result } from '@shared/models/result.model';
 import Blank from '../../../components/blank/blank';
 import {
   BreadcrumbModel,
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
-import { CategoryModel, initialCategory } from '../../../models/category.model';
+import { CategoryModel, initialCategory } from '@shared/models/category.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

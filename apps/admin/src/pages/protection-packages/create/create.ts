@@ -11,8 +11,8 @@ import Blank from '../../../components/blank/blank';
 import {
   initialProtectionPackage,
   ProtectionPackageModel,
-} from '../../../models/protection-package.model';
-import { HttpService } from '../../../services/http';
+} from '@shared/models/protection-package.model';
+import { HttpService } from '@shared/services/http';
 
 @Component({
   imports: [

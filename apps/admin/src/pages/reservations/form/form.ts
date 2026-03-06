@@ -15,9 +15,9 @@ import { NgxMaskPipe } from 'ngx-mask';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
-import { FormModel, initialForm } from '../../../models/form.model';
-import { HttpService } from '../../../services/http';
+import { Result } from '@shared/models/result.model';
+import { FormModel, initialForm } from '@shared/models/form.model';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import Loading from '../../../components/loading/loading';
 
@@ -187,7 +187,7 @@ export default class Form {
       return;
     }
 
-    if (!this.customerApproval()) {
+    if (!this.customerApproval() && this.type() === 'pickup') {
       this.#toast.showToast('Hata', 'Formu onaylamalısınız', 'error');
       return;
     }

@@ -16,8 +16,8 @@ import {
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
-import { initialVehicle, VehicleModel } from '../../../models/vehicle.model';
+import { Result } from '@shared/models/result.model';
+import { initialVehicle, VehicleModel } from '@shared/models/vehicle.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

@@ -9,7 +9,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { httpResource } from '@angular/common/http';
-import { Result } from '../../../models/result.model';
+import { Result } from '@shared/models/result.model';
 import {
   BreadcrumbModel,
   BreadcrumbService,
@@ -20,8 +20,8 @@ import {
   FlexiTreeviewComponent,
   FlexiTreeviewService,
 } from 'flexi-treeview';
-import { initialRole, RoleModel } from '../../../models/role.model';
-import { HttpService } from '../../../services/http';
+import { initialRole, RoleModel } from '@shared/models/role.model';
+import { HttpService } from '@shared/services/http';
 import { Location } from '@angular/common';
 
 @Component({

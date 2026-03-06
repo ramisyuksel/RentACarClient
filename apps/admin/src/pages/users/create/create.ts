@@ -18,13 +18,13 @@ import {
   BreadcrumbService,
 } from '../../../services/breadcrumb';
 import { lastValueFrom } from 'rxjs';
-import { initialUser, UserModel } from '../../../models/user.model';
+import { initialUser, UserModel } from '@shared/models/user.model';
 import { httpResource } from '@angular/common/http';
-import { ODataModel } from '../../../models/odata.model';
-import { BranchModel } from '../../../models/branch.model';
-import { RoleModel } from '../../../models/role.model';
+import { ODataModel } from '@shared/models/odata.model';
+import { BranchModel } from '@shared/models/branch.model';
+import { RoleModel } from '@shared/models/role.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/http';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { Common } from '../../../services/common';
 

@@ -21,22 +21,22 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { lastValueFrom } from 'rxjs';
 import { TrCurrencyPipe } from 'tr-currency';
 import { fuelTypeList, transmissionList } from '../../vehicles/create/create';
-import { CustomerModel, initialCustomer } from '../../../models/customer.model';
+import { CustomerModel, initialCustomer } from '@shared/models/customer.model';
 import Blank from '../../../components/blank/blank';
 import { VehiclePipe } from '../../../pipes/vehicle-pipe';
 import {
   BreadcrumbModel,
   BreadcrumbService,
 } from '../../../services/breadcrumb';
-import { initialReservation, ReservationModel } from '../../../models/reservation.model';
-import { ODataModel } from '../../../models/odata.model';
-import { BranchModel } from '../../../models/branch.model';
-import { initialVehicle, VehicleModel } from '../../../models/vehicle.model';
-import { CategoryModel } from '../../../models/category.model';
-import { ProtectionPackageModel } from '../../../models/protection-package.model';
-import { HttpService } from '../../../services/http';
+import { initialReservation, ReservationModel } from '@shared/models/reservation.model';
+import { ODataModel } from '@shared/models/odata.model';
+import { BranchModel } from '@shared/models/branch.model';
+import { initialVehicle, VehicleModel } from '@shared/models/vehicle.model';
+import { CategoryModel } from '@shared/models/category.model';
+import { ProtectionPackageModel } from '@shared/models/protection-package.model';
+import { HttpService } from '@shared/services/http';
 import { Common } from '../../../services/common';
-import { RentalExtraModel } from '../../../models/rental-extra.model';
+import { RentalExtraModel } from '@shared/models/rental-extra.model';
 
 @Component({
   imports: [

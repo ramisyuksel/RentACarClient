@@ -14,11 +14,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgClass } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
-import { BranchModel, initialBranch } from '../../../models/branch.model';
-import { HttpService } from '../../../services/http';
+import { BranchModel, initialBranch } from '@shared/models/branch.model';
+import { HttpService } from '@shared/services/http';
 import { FlexiToastService } from 'flexi-toast';
 import { NgxMaskDirective } from 'ngx-mask';
-import { initialRole, RoleModel } from '../../../models/role.model';
+import { initialRole, RoleModel } from '@shared/models/role.model';
 
 @Component({
   imports: [Blank, FormsModule, FormValidateDirective, NgClass],

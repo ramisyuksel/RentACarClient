@@ -23,10 +23,10 @@ import {
   StateModel,
   StateSortModel,
 } from 'flexi-grid';
-import { ODataModel } from '../../models/odata.model';
+import { ODataModel } from '@shared/models/odata.model';
 import { RouterLink } from '@angular/router';
 import { FlexiToastService } from 'flexi-toast';
-import { HttpService } from '../../services/http';
+import { HttpService } from '@shared/services/http';
 import { BreadcrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
 import { Common } from '../../services/common';
